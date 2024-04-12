@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import org.example.SpringBootPathfinderWorkshop.entity.enums.RoleNameEnum;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.UUID;
 
 @Entity
 @Table(name = "roles")

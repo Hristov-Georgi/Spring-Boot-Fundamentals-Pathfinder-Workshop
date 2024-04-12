@@ -1,45 +1,57 @@
-package org.example.SpringBootPathfinderWorkshop.entity;
+package org.example.SpringBootPathfinderWorkshop.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToMany;
+import org.example.SpringBootPathfinderWorkshop.entity.Role;
 import org.example.SpringBootPathfinderWorkshop.entity.enums.LevelEnum;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class UserServiceModel {
 
-    @Id
-    @UuidGenerator
     private String id;
 
-    @Column(name = "full_name")
     private String fullName;
 
     private int age;
 
-    @Column(nullable = false, unique = true, updatable = false)
     private String username;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Column(nullable = false)
     private Set<Role> roles;
 
-    @Enumerated(value = EnumType.STRING)
     private LevelEnum level;
 
-    public User() {
+    public UserServiceModel() {
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getUsername() {
@@ -81,21 +93,4 @@ public class User {
     public void setLevel(LevelEnum level) {
         this.level = level;
     }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
 }
