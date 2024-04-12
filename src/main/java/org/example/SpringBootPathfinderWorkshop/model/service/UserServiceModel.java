@@ -1,11 +1,7 @@
-package org.example.SpringBootPathfinderWorkshop.model;
+package org.example.SpringBootPathfinderWorkshop.model.service;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToMany;
-import org.example.SpringBootPathfinderWorkshop.entity.Role;
-import org.example.SpringBootPathfinderWorkshop.entity.enums.LevelEnum;
+import org.example.SpringBootPathfinderWorkshop.model.entity.Role;
+import org.example.SpringBootPathfinderWorkshop.model.entity.enums.LevelEnum;
 
 import java.util.Set;
 

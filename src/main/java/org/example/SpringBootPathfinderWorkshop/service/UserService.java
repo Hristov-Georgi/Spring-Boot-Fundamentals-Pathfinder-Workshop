@@ -1,8 +1,7 @@
 package org.example.SpringBootPathfinderWorkshop.service;
 
 
-import org.example.SpringBootPathfinderWorkshop.model.UserLoginBindingModel;
-import org.example.SpringBootPathfinderWorkshop.model.UserServiceModel;
+import org.example.SpringBootPathfinderWorkshop.model.service.UserServiceModel;
 
 public interface UserService {
 
@@ -11,4 +10,8 @@ public interface UserService {
     void login(UserServiceModel userServiceModel);
 
     void logout();
+
+    boolean isUsernameExists(String username);
+
+    void saveUser(UserServiceModel userServiceModel);
 }

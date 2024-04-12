@@ -1,10 +1,9 @@
-package org.example.SpringBootPathfinderWorkshop.entity;
+package org.example.SpringBootPathfinderWorkshop.model.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "messages")

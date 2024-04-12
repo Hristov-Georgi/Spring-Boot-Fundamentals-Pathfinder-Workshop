@@ -1,9 +1,7 @@
-package org.example.SpringBootPathfinderWorkshop.entity;
+package org.example.SpringBootPathfinderWorkshop.model.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.List;
 
 
 @Entity

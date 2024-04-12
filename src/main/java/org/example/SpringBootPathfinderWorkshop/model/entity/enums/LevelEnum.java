@@ -1,4 +1,4 @@
-package org.example.SpringBootPathfinderWorkshop.entity.enums;
+package org.example.SpringBootPathfinderWorkshop.model.entity.enums;
 
 public enum LevelEnum {
     BEGINNER, INTERMEDIATE, ADVANCED;

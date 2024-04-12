@@ -1,4 +1,4 @@
-package org.example.SpringBootPathfinderWorkshop.entity;
+package org.example.SpringBootPathfinderWorkshop.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PastOrPresent;

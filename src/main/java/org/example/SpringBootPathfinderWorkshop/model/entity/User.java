@@ -1,7 +1,7 @@
-package org.example.SpringBootPathfinderWorkshop.entity;
+package org.example.SpringBootPathfinderWorkshop.model.entity;
 
 import jakarta.persistence.*;
-import org.example.SpringBootPathfinderWorkshop.entity.enums.LevelEnum;
+import org.example.SpringBootPathfinderWorkshop.model.entity.enums.LevelEnum;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Set;

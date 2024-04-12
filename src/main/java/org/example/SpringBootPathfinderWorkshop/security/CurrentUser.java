@@ -1,7 +1,7 @@
 package org.example.SpringBootPathfinderWorkshop.security;
 
-import org.example.SpringBootPathfinderWorkshop.entity.Role;
-import org.example.SpringBootPathfinderWorkshop.entity.enums.RoleNameEnum;
+import org.example.SpringBootPathfinderWorkshop.model.entity.Role;
+import org.example.SpringBootPathfinderWorkshop.model.entity.enums.RoleNameEnum;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -11,8 +11,6 @@ import java.util.Set;
 @Component
 @SessionScope
 public class CurrentUser {
-
-    private String id = null;
 
     private String username = null;
 
@@ -33,21 +31,19 @@ public class CurrentUser {
     }
 
     public boolean isModerator() {
+        for(Role r : this.roles) {
+            if(r.getName() == RoleNameEnum.MODERATOR) {
+                return true;
+            }
+        }
 
-        return roles.contains(RoleNameEnum.MODERATOR);
+
+        return false;
     }
 
     public boolean isAnonymous() {
 
         return this.username == null;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getUsername() {

@@ -1,4 +1,4 @@
-package org.example.SpringBootPathfinderWorkshop.model;
+package org.example.SpringBootPathfinderWorkshop.model.binding;
 
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
