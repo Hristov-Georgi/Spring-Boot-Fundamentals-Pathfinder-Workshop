@@ -5,6 +5,7 @@ import org.example.SpringBootPathfinderWorkshop.model.binding.UserLoginBindingMo
 import org.example.SpringBootPathfinderWorkshop.model.binding.UserRegisterBindingModel;
 import org.example.SpringBootPathfinderWorkshop.model.service.UserServiceModel;
 import org.example.SpringBootPathfinderWorkshop.model.view.UserProfileViewModel;
+import org.example.SpringBootPathfinderWorkshop.security.CurrentUser;
 import org.example.SpringBootPathfinderWorkshop.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,21 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CurrentUser currentUser;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, CurrentUser currentUser) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.currentUser = currentUser;
     }
 
     @GetMapping("/login")
     public String login(Model model) {
+
+        if(!this.currentUser.isAnonymous()) {
+            return "redirect:/";
+        }
 
         if(!model.containsAttribute("userLoginBindingModel")) {
             model.addAttribute("userLoginBindingModel", new UserLoginBindingModel());
@@ -112,8 +119,6 @@ public class UserController {
             return "redirect:register";
         }
 
-
-
         UserServiceModel userServiceModel = this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
 
         this.userService.saveUser(userServiceModel);
@@ -123,6 +128,10 @@ public class UserController {
 
     @GetMapping("/profile/{id}")
     public String profile(@PathVariable String id, Model model) {
+
+        if(this.currentUser.isAnonymous()) {
+            return "redirect:/";
+        }
 
         model.addAttribute("userProfile",
                 this.modelMapper

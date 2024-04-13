@@ -35,6 +35,9 @@ public class Route {
     @ManyToMany
     private List<Category> categories;
 
+    @OneToMany(mappedBy = "route", targetEntity = Picture.class, fetch = FetchType.EAGER)
+    private List<Picture> pictures;
+
     public Route() {
     }
 
@@ -96,5 +99,13 @@ public class Route {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
     }
 }

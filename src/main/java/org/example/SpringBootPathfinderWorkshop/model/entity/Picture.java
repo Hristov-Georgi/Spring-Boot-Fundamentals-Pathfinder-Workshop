@@ -63,9 +63,4 @@ public class Picture {
         this.route = route;
     }
 
-    //    • id - Accepts UUID String or Long values
-    //    • title - Accepts String values
-    //    • url - Accepts very long String values
-    //    • author - Accepts User Entities as values
-    //    • route - Accepts Route Entities as values
 }

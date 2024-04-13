@@ -10,6 +10,7 @@ import org.example.SpringBootPathfinderWorkshop.repository.UserRepository;
 import org.example.SpringBootPathfinderWorkshop.security.CurrentUser;
 import org.example.SpringBootPathfinderWorkshop.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final CurrentUser currentUser;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper, CurrentUser currentUser) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
