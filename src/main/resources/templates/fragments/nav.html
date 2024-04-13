@@ -18,12 +18,12 @@
             </li>
         </th:block>
 
-        <th:block th:unless="${@currentUser.isAnonymous}">
+        <th:block th:object="${@currentUser}" th:unless="${@currentUser.isAnonymous}">
             <li>
                 <a href="/">Add new route</a>
             </li>
             <li>
-                <a href="/">Profile</a>
+                <a th:href="@{/users/profile/{id}(id = *{id})}">Profile</a>
             </li>
             <li>
                 <a  th:if="${@currentUser.isAdmin}" href="/">Admin</a>

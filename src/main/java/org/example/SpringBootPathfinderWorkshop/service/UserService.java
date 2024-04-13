@@ -14,4 +14,6 @@ public interface UserService {
     boolean isUsernameExists(String username);
 
     void saveUser(UserServiceModel userServiceModel);
+
+    UserServiceModel selectByUserId(String id);
 }

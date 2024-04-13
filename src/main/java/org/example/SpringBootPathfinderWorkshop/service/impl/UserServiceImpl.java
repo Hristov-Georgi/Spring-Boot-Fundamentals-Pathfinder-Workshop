@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -51,12 +52,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void login(UserServiceModel userServiceModel) {
+        this.currentUser.setId(userServiceModel.getId());
         this.currentUser.setUsername(userServiceModel.getUsername());
         this.currentUser.setRoles(userServiceModel.getRoles());
     }
 
     @Override
     public void logout() {
+        this.currentUser.setId(null);
         this.currentUser.setUsername(null);
         this.currentUser.setRoles(null);
     }
@@ -80,5 +83,11 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
     }
 
+    @Override
+    public UserServiceModel selectByUserId(String id) {
 
+        User user = this.userRepository.findById(id).get();
+
+        return this.modelMapper.map(user, UserServiceModel.class);
+    }
 }

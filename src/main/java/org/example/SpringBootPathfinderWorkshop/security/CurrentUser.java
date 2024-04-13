@@ -12,6 +12,8 @@ import java.util.Set;
 @SessionScope
 public class CurrentUser {
 
+    private String id = null;
+
     private String username = null;
 
     private Set<Role> roles = new HashSet<>();
@@ -44,6 +46,14 @@ public class CurrentUser {
     public boolean isAnonymous() {
 
         return this.username == null;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
