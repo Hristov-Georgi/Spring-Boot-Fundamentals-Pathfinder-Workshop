@@ -10,7 +10,9 @@
 
         <div class="row g-3 align-items-center">
 
-            <form action="/users/login" method="POST" th:object="${userLoginBindingModel}">
+            <form action="/users/login"
+                  method="POST"
+                  th:object="${userLoginBindingModel}">
                 <small th:if="${notFound}" class="text-danger col-12 text-center">Incorrect username or password</small>
                 <div>
                     <div class="col-auto">

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -30,7 +31,18 @@ public class RouteController {
 
         model.addAttribute("routesView", this.routeService.selectAll());
 
-
         return "routes";
+    }
+
+    @GetMapping("/details/{id}")
+    public String detailedRoutes(@PathVariable String id, Model model) {
+
+        if(this.currentUser.isAnonymous()) {
+            return "redirect:/users/login";
+        }
+
+        model.addAttribute("details", this.routeService.selectById(id));
+
+        return "route-details";
     }
 }

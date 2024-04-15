@@ -1,5 +1,7 @@
 package org.example.SpringBootPathfinderWorkshop.service.impl;
 
+import org.example.SpringBootPathfinderWorkshop.model.entity.Route;
+import org.example.SpringBootPathfinderWorkshop.model.view.RouteDetailedView;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteViewModel;
 import org.example.SpringBootPathfinderWorkshop.repository.RouteRepository;
 import org.example.SpringBootPathfinderWorkshop.service.RouteService;
@@ -37,5 +39,15 @@ public class RouteServiceImpl implements RouteService {
                 .collect(Collectors.toList());
 
         return routes;
+    }
+
+    @Override
+    public RouteDetailedView selectById(String routeId) {
+
+        Route route = this.routeRepository.findById(routeId).get();
+
+        RouteDetailedView detailedView = this.modelMapper.map(route, RouteDetailedView.class);
+
+        return detailedView;
     }
 }
