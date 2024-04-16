@@ -1,9 +1,13 @@
 package org.example.SpringBootPathfinderWorkshop.service.impl;
 
+import org.example.SpringBootPathfinderWorkshop.model.entity.Category;
+import org.example.SpringBootPathfinderWorkshop.model.entity.Picture;
 import org.example.SpringBootPathfinderWorkshop.model.entity.Route;
+import org.example.SpringBootPathfinderWorkshop.model.entity.enums.CategoryNameEnum;
 import org.example.SpringBootPathfinderWorkshop.model.service.RouteAddServiceModel;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteDetailedView;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteViewModel;
+import org.example.SpringBootPathfinderWorkshop.model.view.RoutesByCategoryViewModel;
 import org.example.SpringBootPathfinderWorkshop.repository.RouteRepository;
 import org.example.SpringBootPathfinderWorkshop.security.CurrentUser;
 import org.example.SpringBootPathfinderWorkshop.service.CategoryService;
@@ -56,9 +60,8 @@ public class RouteServiceImpl implements RouteService {
 
         Route route = this.routeRepository.findById(routeId).get();
 
-        RouteDetailedView detailedView = this.modelMapper.map(route, RouteDetailedView.class);
+        return this.modelMapper.map(route, RouteDetailedView.class);
 
-        return detailedView;
     }
 
 
@@ -75,5 +78,26 @@ public class RouteServiceImpl implements RouteService {
                 .collect(Collectors.toList()));
 
         this.routeRepository.save(route);
+    }
+
+    @Override
+    public List<RoutesByCategoryViewModel> selectAllByCategory(CategoryNameEnum categoryName) {
+
+        List<Route> routesByCategory = this.routeRepository.findAllByCategory(categoryName);
+
+        return routesByCategory.stream()
+                .map(r -> {
+                    RoutesByCategoryViewModel route = this.modelMapper.map(r, RoutesByCategoryViewModel.class);
+
+                    if(r.getPictures().isEmpty()) {
+                        route.setPictureUrl("/images/pic1.jpg");
+                    } else {
+                        route.setPictureUrl(r.getPictures().stream().findFirst().get().getUrl());
+                    }
+                    return route;
+
+                })
+                .toList();
+
     }
 }

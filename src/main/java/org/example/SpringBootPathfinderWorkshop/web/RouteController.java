@@ -2,7 +2,9 @@ package org.example.SpringBootPathfinderWorkshop.web;
 
 import jakarta.validation.Valid;
 import org.example.SpringBootPathfinderWorkshop.model.binding.RouteAddBindingModel;
+import org.example.SpringBootPathfinderWorkshop.model.entity.enums.CategoryNameEnum;
 import org.example.SpringBootPathfinderWorkshop.model.service.RouteAddServiceModel;
+import org.example.SpringBootPathfinderWorkshop.model.view.RoutesByCategoryViewModel;
 import org.example.SpringBootPathfinderWorkshop.security.CurrentUser;
 import org.example.SpringBootPathfinderWorkshop.service.RouteService;
 import org.modelmapper.ModelMapper;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/routes")
@@ -60,6 +63,10 @@ public class RouteController {
     @GetMapping("/add")
     public String add(Model model) {
 
+        if(this.currentUser.isAnonymous()) {
+            return "redirect:/";
+        }
+
         if(!model.containsAttribute("routeAddBindingModel")) {
             model.addAttribute("routeAddBindingModel", new RouteAddBindingModel());
         }
@@ -87,5 +94,56 @@ public class RouteController {
         this.routeService.addNewRoute(routeAddServiceModel);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/car")
+    public String carRoutes(Model model) {
+
+        if(this.currentUser.isAnonymous()) {
+            return "redirect:/users/login";
+        }
+
+        model.addAttribute("carRoutes",
+                this.routeService.selectAllByCategory(CategoryNameEnum.CAR));
+
+        return "car";
+    }
+
+    @GetMapping("/bicycle")
+    public String bicycleRoutes(Model model) {
+        if(this.currentUser.isAnonymous()) {
+            return "redirect:/users/login";
+        }
+
+        model.addAttribute("bicycleRoutes",
+                this.routeService.selectAllByCategory(CategoryNameEnum.BICYCLE));
+
+        return "bicycle";
+    }
+
+    @GetMapping("/motorcycle")
+    public String motorcycleRoutes(Model model) {
+
+        if(this.currentUser.isAnonymous()) {
+            return "redirect:/users/login";
+        }
+
+        model.addAttribute("motorcycleRoutes",
+                this.routeService.selectAllByCategory(CategoryNameEnum.MOTORCYCLE));
+
+        return "motorcycle";
+    }
+
+    @GetMapping("/pedestrian")
+    public String pedestrianRoutes(Model model) {
+
+        if(this.currentUser.isAnonymous()) {
+            return "redirect:/users/login";
+        }
+
+        model.addAttribute("pedestrianRoutes",
+                this.routeService.selectAllByCategory(CategoryNameEnum.PEDESTRIAN));
+
+        return "pedestrian";
     }
 }
