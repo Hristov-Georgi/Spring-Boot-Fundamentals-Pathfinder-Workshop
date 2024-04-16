@@ -1,5 +1,6 @@
 package org.example.SpringBootPathfinderWorkshop.service;
 
+import org.example.SpringBootPathfinderWorkshop.model.service.RouteAddServiceModel;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteDetailedView;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteViewModel;
 
@@ -10,4 +11,7 @@ public interface RouteService {
     List<RouteViewModel> selectAll();
 
     RouteDetailedView selectById(String routeId);
+
+    void addNewRoute(RouteAddServiceModel routeAddServiceModel);
+
 }

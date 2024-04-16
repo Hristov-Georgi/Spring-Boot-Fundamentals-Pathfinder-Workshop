@@ -1,6 +1,7 @@
 package org.example.SpringBootPathfinderWorkshop.service;
 
 
+import org.example.SpringBootPathfinderWorkshop.model.entity.User;
 import org.example.SpringBootPathfinderWorkshop.model.service.UserServiceModel;
 
 public interface UserService {
@@ -16,4 +17,6 @@ public interface UserService {
     void saveUser(UserServiceModel userServiceModel);
 
     UserServiceModel selectByUserId(String id);
+
+    User selectCurrentUser(String id);
 }

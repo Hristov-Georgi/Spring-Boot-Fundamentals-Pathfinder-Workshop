@@ -1,10 +1,14 @@
 package org.example.SpringBootPathfinderWorkshop.service.impl;
 
 import org.example.SpringBootPathfinderWorkshop.model.entity.Route;
+import org.example.SpringBootPathfinderWorkshop.model.service.RouteAddServiceModel;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteDetailedView;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteViewModel;
 import org.example.SpringBootPathfinderWorkshop.repository.RouteRepository;
+import org.example.SpringBootPathfinderWorkshop.security.CurrentUser;
+import org.example.SpringBootPathfinderWorkshop.service.CategoryService;
 import org.example.SpringBootPathfinderWorkshop.service.RouteService;
+import org.example.SpringBootPathfinderWorkshop.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +19,16 @@ import java.util.stream.Collectors;
 public class RouteServiceImpl implements RouteService {
 
     private final RouteRepository routeRepository;
+    private final UserService userService;
+    private final CategoryService categoryService;
+    private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
 
-    public RouteServiceImpl(RouteRepository routeRepository, ModelMapper modelMapper) {
+    public RouteServiceImpl(RouteRepository routeRepository, UserService userService, CategoryService categoryService, CurrentUser currentUser, ModelMapper modelMapper) {
         this.routeRepository = routeRepository;
+        this.userService = userService;
+        this.categoryService = categoryService;
+        this.currentUser = currentUser;
         this.modelMapper = modelMapper;
     }
 
@@ -49,5 +59,21 @@ public class RouteServiceImpl implements RouteService {
         RouteDetailedView detailedView = this.modelMapper.map(route, RouteDetailedView.class);
 
         return detailedView;
+    }
+
+
+    @Override
+    public void addNewRoute(RouteAddServiceModel routeAddServiceModel) {
+
+        Route route = this.modelMapper.map(routeAddServiceModel, Route.class);
+
+        route.setAuthor(this.userService.selectCurrentUser(this.currentUser.getId()));
+
+        route.setCategories(routeAddServiceModel.getCategories()
+                .stream()
+                .map(this.categoryService::selectByName)
+                .collect(Collectors.toList()));
+
+        this.routeRepository.save(route);
     }
 }

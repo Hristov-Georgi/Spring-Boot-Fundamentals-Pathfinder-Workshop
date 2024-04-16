@@ -92,4 +92,9 @@ public class UserServiceImpl implements UserService {
 
         return this.modelMapper.map(user, UserServiceModel.class);
     }
+
+    @Override
+    public User selectCurrentUser(String id) {
+        return this.userRepository.findById(id).get();
+    }
 }

@@ -20,7 +20,7 @@
 
         <th:block th:object="${@currentUser}" th:unless="${@currentUser.isAnonymous}">
             <li>
-                <a href="/">Add new route</a>
+                <a th:href="@{/routes/add}">Add new route</a>
             </li>
             <li>
                 <a th:href="@{/users/profile/{id}(id = *{id})}">Profile</a>
