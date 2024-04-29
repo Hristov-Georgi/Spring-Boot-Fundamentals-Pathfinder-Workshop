@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
     @UuidGenerator
@@ -35,7 +35,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private LevelEnum level;
 
-    public User() {
+    public UserEntity() {
     }
 
     public String getId() {

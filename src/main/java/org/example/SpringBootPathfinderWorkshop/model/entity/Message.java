@@ -20,10 +20,10 @@ public class Message {
     private String textContent;
 
     @ManyToOne
-    private User author;
+    private UserEntity author;
 
     @ManyToOne
-    private User recipient;
+    private UserEntity recipient;
 
     public Message() {
     }
@@ -48,19 +48,19 @@ public class Message {
         this.textContent = textContent;
     }
 
-    public User getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 
-    public User getRecipient() {
+    public UserEntity getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(User recipient) {
+    public void setRecipient(UserEntity recipient) {
         this.recipient = recipient;
     }
 

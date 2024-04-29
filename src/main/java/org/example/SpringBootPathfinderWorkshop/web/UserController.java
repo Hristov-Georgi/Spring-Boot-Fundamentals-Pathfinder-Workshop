@@ -1,11 +1,8 @@
 package org.example.SpringBootPathfinderWorkshop.web;
 
 import jakarta.validation.Valid;
-import org.example.SpringBootPathfinderWorkshop.model.binding.UserLoginBindingModel;
 import org.example.SpringBootPathfinderWorkshop.model.binding.UserRegisterBindingModel;
 import org.example.SpringBootPathfinderWorkshop.model.service.UserServiceModel;
-import org.example.SpringBootPathfinderWorkshop.model.view.UserProfileViewModel;
-import org.example.SpringBootPathfinderWorkshop.security.CurrentUser;
 import org.example.SpringBootPathfinderWorkshop.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,82 +12,39 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
-    private final CurrentUser currentUser;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper, CurrentUser currentUser) {
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.currentUser = currentUser;
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
-
-        if(!this.currentUser.isAnonymous()) {
-            return "redirect:/";
-        }
-
-        if(!model.containsAttribute("userLoginBindingModel")) {
-            model.addAttribute("userLoginBindingModel", new UserLoginBindingModel());
-            model.addAttribute("notFound", false);
-        }
-
+    public String login() {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginConfirm(@Valid @ModelAttribute UserLoginBindingModel userLoginBindingModel,
-                               BindingResult bindingResult,
+    @PostMapping("/login-failed")
+    public String loginConfirm(@ModelAttribute("username") String username,
                                RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
-            redirectAttributes
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel",
-                        bindingResult);
+            redirectAttributes.addFlashAttribute("username", username);
+            redirectAttributes.addFlashAttribute("bad_credentials", true);
 
-            return "redirect:login";
-        }
-
-        UserServiceModel userServiceModel = this.userService.validateUser(userLoginBindingModel.getUsername(),
-                userLoginBindingModel.getPassword());
-
-        if(userServiceModel == null) {
-            redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
-            redirectAttributes.addFlashAttribute("notFound", true);
-
-            return "redirect:login";
-        }
-
-        this.userService.login(userServiceModel);
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/logout")
-    public String logout() {
-        this.userService.logout();
-
-        return "redirect:/";
+        return "redirect:login";
     }
 
     @GetMapping("/register")
     public String register(Model model) {
 
         if(!model.containsAttribute("userRegisterBindingModel")) {
-
-            model
-                    .addAttribute("userRegisterBindingModel", new UserRegisterBindingModel())
-                    .addAttribute("notEqualPasswords", false)
-                    .addAttribute("isUsernameOccupied", false);
+            model.addAttribute("userRegisterBindingModel", new UserRegisterBindingModel());
 
         }
 
@@ -102,19 +56,13 @@ public class UserController {
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes) {
 
-        boolean arePasswordsEqual = userRegisterBindingModel.getPassword()
-                .equals(userRegisterBindingModel.getConfirmPassword());
 
-        boolean isUsernameOccupied = this.userService.isUsernameExists(userRegisterBindingModel.getUsername());
-
-        if(bindingResult.hasErrors() || !arePasswordsEqual || isUsernameOccupied) {
+        if(bindingResult.hasErrors()) {
 
             redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             redirectAttributes
                     .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",
                             bindingResult);
-            redirectAttributes.addFlashAttribute("notEqualPasswords", true);
-            redirectAttributes.addFlashAttribute("isUsernameOccupied", isUsernameOccupied); //true
 
             return "redirect:register";
         }
@@ -126,17 +74,10 @@ public class UserController {
         return "redirect:login";
     }
 
-    @GetMapping("/profile/{id}")
-    public String profile(@PathVariable String id, Model model) {
+    @GetMapping("/profile/{username}")
+    public String profile(@PathVariable String username, Model model) {
 
-        if(this.currentUser.isAnonymous()) {
-            return "redirect:/";
-        }
-
-        model.addAttribute("userProfile",
-                this.modelMapper
-                        .map(this.userService.selectByUserId(id), UserProfileViewModel.class));
-
+        model.addAttribute("userProfile", this.userService.selectCurrentUser(username));
 
         return "profile";
     }

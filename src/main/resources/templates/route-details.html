@@ -1,12 +1,12 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="/fragments/head :: head"></head>
+<head th:replace="~{/fragments/head :: head}"></head>
 
 <body>
 <div class="wrapper">
     <header>
-        <nav th:replace="/fragments/nav :: nav"></nav>
+        <nav th:replace="~{/fragments/nav :: nav}"></nav>
     </header>
 
     <input type="hidden" name="routeId" id="routeId">
@@ -105,6 +105,6 @@
     <script th:src="@{/js/comments.js}"></script>
     -->
 </div>
-<footer th:replace="/fragments/footer :: footer"></footer>
+<footer th:replace="~{/fragments/footer :: footer}"></footer>
 </body>
 </html>

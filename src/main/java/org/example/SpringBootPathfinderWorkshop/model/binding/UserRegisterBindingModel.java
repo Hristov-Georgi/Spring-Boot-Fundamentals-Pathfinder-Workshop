@@ -1,11 +1,17 @@
 package org.example.SpringBootPathfinderWorkshop.model.binding;
 
 import jakarta.validation.constraints.*;
+import org.example.SpringBootPathfinderWorkshop.validation.annotations.ArePasswordsEqual;
+import org.example.SpringBootPathfinderWorkshop.validation.annotations.IsEmailOccupied;
+import org.example.SpringBootPathfinderWorkshop.validation.annotations.IsUsernameOccupied;
 import org.hibernate.validator.constraints.Length;
 
+@ArePasswordsEqual
 public class UserRegisterBindingModel {
 
+
     @NotBlank
+    @IsUsernameOccupied
     @Length(min = 4, max = 20, message = "Username must be between 4 and 20 symbols.")
     private String username;
 
@@ -13,7 +19,9 @@ public class UserRegisterBindingModel {
     @Length(min = 5, max = 20, message = "Full name must be between 5 and 20 symbols.")
     private String fullName;
 
+
     @Email(message = "Enter valid email address.")
+    @IsEmailOccupied
     private String email;
 
     @NotNull

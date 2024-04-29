@@ -1,35 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <nav th:fragment="nav" class="main-nav">
     <ul>
-        <th:block th:if="${@currentUser.isAnonymous}">
-            <li>
-                <a href="/">Home</a>
+
+            <li >
+                <a th:href="@{/}">Home</a>
             </li>
-            <li>
-                <a href="/users/login">Login</a>
+            <li sec:authorize="!isAuthenticated()">
+                <a th:href="@{/users/login}">Login</a>
             </li>
-            <li>
-                <a href="/users/register">Register</a>
+            <li sec:authorize="!isAuthenticated()">
+                <a th:href="@{/users/register}">Register</a>
             </li>
             <li>
                 <a th:href="@{/about}">About</a>
             </li>
-        </th:block>
 
-        <th:block th:object="${@currentUser}" th:unless="${@currentUser.isAnonymous}">
+
+        <th:block sec:authorize="isAuthenticated()">
             <li>
                 <a th:href="@{/routes/add}">Add new route</a>
             </li>
             <li>
-                <a th:href="@{/users/profile/{id}(id = *{id})}">Profile</a>
+                <a th:href="@{/users/profile/{username}(username = ${#authentication.name})}">Profile</a>
+            </li>
+            <li >
+                <a   href="/">Admin</a>
             </li>
             <li>
-                <a  th:if="${@currentUser.isAdmin}" href="/">Admin</a>
-            </li>
-            <li>
-                <a href="/users/logout">Logout</a>
+                <form
+                        th:action="@{/users/logout}"
+                        th:method="POST">
+
+                    <input class="btn btn-light nav-link" type="submit" value="Logout">
+                </form>
             </li>
 
         </th:block>

@@ -1,22 +1,15 @@
 package org.example.SpringBootPathfinderWorkshop.service;
 
 
-import org.example.SpringBootPathfinderWorkshop.model.entity.User;
+import org.example.SpringBootPathfinderWorkshop.model.entity.UserEntity;
 import org.example.SpringBootPathfinderWorkshop.model.service.UserServiceModel;
+import org.example.SpringBootPathfinderWorkshop.model.view.UserProfileViewModel;
 
 public interface UserService {
 
-    UserServiceModel validateUser(String username, String password);
-
-    void login(UserServiceModel userServiceModel);
-
-    void logout();
-
-    boolean isUsernameExists(String username);
-
     void saveUser(UserServiceModel userServiceModel);
 
-    UserServiceModel selectByUserId(String id);
+    UserProfileViewModel selectCurrentUser(String username);
 
-    User selectCurrentUser(String id);
+    UserEntity selectUserEntityByUsername(String username);
 }

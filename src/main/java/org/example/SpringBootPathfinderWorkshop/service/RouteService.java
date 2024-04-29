@@ -7,6 +7,7 @@ import org.example.SpringBootPathfinderWorkshop.model.view.RouteDetailedView;
 import org.example.SpringBootPathfinderWorkshop.model.view.RouteViewModel;
 import org.example.SpringBootPathfinderWorkshop.model.view.RoutesByCategoryViewModel;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface RouteService {
@@ -15,7 +16,7 @@ public interface RouteService {
 
     RouteDetailedView selectById(String routeId);
 
-    void addNewRoute(RouteAddServiceModel routeAddServiceModel);
+    void addNewRoute(RouteAddServiceModel routeAddServiceModel, Principal principal);
 
     List<RoutesByCategoryViewModel> selectAllByCategory(CategoryNameEnum categoryName);
 

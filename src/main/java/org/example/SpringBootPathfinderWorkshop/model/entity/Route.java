@@ -27,7 +27,7 @@ public class Route {
     private String name;
 
     @ManyToOne
-    private User author;
+    private UserEntity author;
 
     @Column(name = "video_url")
     private String videoUrl;
@@ -69,11 +69,11 @@ public class Route {
         this.name = name;
     }
 
-    public User getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 

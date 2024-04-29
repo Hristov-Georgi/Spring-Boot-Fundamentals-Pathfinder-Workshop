@@ -1,9 +1,7 @@
 package org.example.SpringBootPathfinderWorkshop.model.service;
 
-import jakarta.persistence.*;
-import org.example.SpringBootPathfinderWorkshop.model.entity.Category;
 import org.example.SpringBootPathfinderWorkshop.model.entity.Picture;
-import org.example.SpringBootPathfinderWorkshop.model.entity.User;
+import org.example.SpringBootPathfinderWorkshop.model.entity.UserEntity;
 import org.example.SpringBootPathfinderWorkshop.model.entity.enums.CategoryNameEnum;
 import org.example.SpringBootPathfinderWorkshop.model.entity.enums.LevelEnum;
 
@@ -21,7 +19,7 @@ public class RouteAddServiceModel {
 
     private String name;
 
-    private User author;
+    private UserEntity author;
 
     private String videoUrl;
 
@@ -72,11 +70,11 @@ public class RouteAddServiceModel {
         this.name = name;
     }
 
-    public User getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 

@@ -4,6 +4,8 @@ import org.example.SpringBootPathfinderWorkshop.model.entity.enums.LevelEnum;
 
 public class UserProfileViewModel {
 
+    private String id;
+
     private LevelEnum level;
 
     private String fullName;
@@ -45,5 +47,13 @@ public class UserProfileViewModel {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

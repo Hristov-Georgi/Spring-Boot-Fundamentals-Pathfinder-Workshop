@@ -1,12 +1,12 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="/fragments/head :: head"></head>
+<head th:replace="~{/fragments/head :: head}"></head>
 
 <body>
 
 <header>
-    <nav th:replace="/fragments/nav :: nav"></nav>
+    <nav th:replace="~{/fragments/nav :: nav}"></nav>
 </header>
 
 <main class="p-5 align-content-center bg-blur my-register-div">
@@ -22,7 +22,7 @@
                         <h5  class="mt-2 mb-0">Username</h5>
                         <span th:text="*{username}">UI/UX Designer</span>
                         <h5 class="mt-2 mb-0">Age</h5>
-                        <span th:text="*{username}">33</span>
+                        <span th:text="*{age}">33</span>
                         <div class="px-4 mt-5">
                             <p class="fonts">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim et nostrum
                                 optio perferendis quam quod ratione rem sit soluta ut! A dolor laborum, maiores neque
@@ -45,5 +45,5 @@
     </div>
 </main>
 </body>
-<footer th:replace="/fragments/footer :: footer"></footer>
+<footer th:replace="~{/fragments/footer :: footer}"></footer>
 </html>
